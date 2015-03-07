@@ -14,7 +14,7 @@ class dataBase:
 
     def __query(self):
         cur = self.conn.cursor()
-        cur.execute("""SELECT "RSGUID_RTEUID_TXTDESIG",ST_AsText("ROUTESEGASLINE") FROM "RTE_SEG" WHERE "RTE_SEG"."ROUTESEGASLINE" && ST_MakeEnvelope(-2,50.0,-1,51.0,4326);""")
+        cur.execute("""SELECT "RSGUID_RTEUID_TXTDESIG",ST_AsText("ROUTESEGASLINE") FROM "RTE_SEG" ;""") #WHERE "RTE_SEG"."ROUTESEGASLINE" && ST_MakeEnvelope(-2,50.0,-1,51.0,4326)
         return self.__parse_text_to_geom(cur.fetchall())
 
     def __parse_text_to_geom(self, data):
@@ -83,11 +83,8 @@ class dataBase:
             list.append(cur[1])
         return list
 
-    def __close_enough(self,point1,point2):
-        if abs(point1[0]-point2[0]) < 0.05 and abs(point1[1]-point2[1]) < 0.05:
-            return True
-        return False
-
+    def __close_enough(self, point1, point2):
+        return point1 == point2
 
     def __linestring_to_tuple(self,linestring):
         data = linestring[11:-1]

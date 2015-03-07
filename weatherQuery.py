@@ -8,11 +8,16 @@ class weatherQuery:
 
     def getWeatherAt(self, lat, lon):
         # get the current weather in JSON
-        self.request = requests.get('http://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&APPID={}'.format(lat,lon,self.key))
+        self.request = requests.get('http://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&APPID={}'.format(lat, lon, self.key))
         if self.request.status_code != 200:
             print "Failed to get weather at location"
-            return
-        return self.how_bad_is_it(self.request.json())
+            return (-1,"Couldn't get weather")
+
+        try:
+            weather = self.how_bad_is_it(self.request.json())
+        except:
+            weather = (-1, "Couldn't read weather")
+        return weather
 
     def how_bad_is_it(self, json):
         windiness = json.get("wind")["speed"]

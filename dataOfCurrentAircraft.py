@@ -2,7 +2,7 @@ __author__ = 'andy'
 import database
 import weatherQuery
 
-WIND_WARNING_THRESHOLD = 6.1
+WIND_WARNING_THRESHOLD = 6.5
 
 routesdatabase = database.dataBase()
 
@@ -19,7 +19,9 @@ for flight, route in routesdatabase.data.items():
         # if it's more than a bit windy
         if windiness[0] > WIND_WARNING_THRESHOLD:
             printed = True
-            print "    ",point, "after ", hour_count, "hours, weather: ", windiness[1]
+            print "    ({:.4f},{:.4f}) after {:.2f} hours, Windiness: ({:.2f}mph) '{:}'".format(
+                point[1], point[0], hour_count, windiness[0], windiness[1]
+            )
         last_point = point
     if not printed:
         print "   All Good."
