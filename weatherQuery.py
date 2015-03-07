@@ -15,5 +15,16 @@ class weatherQuery:
         return self.how_bad_is_it(self.request.json())
 
     def how_bad_is_it(self, json):
-        weather = json.get("weather")
-        return weather[0].get("description")
+        windiness = json.get("wind")["speed"]
+        if windiness < 6:
+            desc = "Calm wind"
+        elif windiness < 7:
+            desc = "Very Mildly Windy"
+        elif windiness < 9:
+            desc = "Mildly Windy"
+        elif windiness < 10:
+            desc = "Slightly Windy"
+        elif windiness < 15:
+            desc = "Partly Windy"
+
+        return (windiness,desc)

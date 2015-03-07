@@ -72,10 +72,14 @@ class dataBase:
         list.append(cur[1])
         # Traverse the list
         while cur[2]:
+            found = False
             for linked_item in items:
                 if cur[2] == linked_item[1]:
                     cur = linked_item
+                    found = True
                     break
+            if not found:
+                return list
             list.append(cur[1])
         return list
 
